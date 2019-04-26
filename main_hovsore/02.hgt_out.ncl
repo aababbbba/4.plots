@@ -12,7 +12,7 @@ begin
 
 ;Información de la carpeta contenedora
 DATADir                     = "../"
-FILES                       = systemfunc (" ls -1 " + DATADir + "wrfout_d0*_2010-09-08_06:00:00")
+FILES                       = systemfunc (" ls -1 " + DATADir + "wrfout_d0*_2010-09-08_14:00:00")
 numFILES                    = dimsizes(FILES)
 ;Inicialización del gráfico 
 type                        = "pdf"

@@ -25,7 +25,7 @@ dimX                        = mdims(nd-1)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;Información para dibujar
 max_altura  = 300 ;Altura maxima para el grafico
-;ii          = 43 ; nodo en y donde se extraera la info
+;ii          = 51 ; nodo en y donde se extraera la info
 max_level   = dimZ-2
 dx          = 2.74348
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -37,7 +37,7 @@ aux     = ispan(1, dimX, 1)*dx ; para recorrer todo el dominio
 gsn_define_colormap(wks,"MPL_viridis")
 res                         = True
 res@vpWidthF                = 0.5
-res@vpHeightF               = (max_altura/(dx*dimY))*0.5 
+res@vpHeightF               = 0.51
 res@gsnMaximize             = True     
 res@xyMarkLineModes         = "Lines"                
 res@tiYAxisFontHeightF      = 0.015
@@ -60,7 +60,7 @@ do ii = 0,dimY-1,1
     ;Comienzo del algoritmo de generación de gráficos
     print(" Creando gráfico para y = "+(ii+1))
      res@xyLineThicknesses   = 2.0
-     res@xyLineColor         = ((5*253)/8)
+     res@xyLineColor         = 120
      aux_z                   = (z_data(0,ii,:)+z_data(1,ii,:))*0.5;Se promedian los valores de altura en los mass point
      plot1                   = gsn_csm_xy(wks, aux, aux_z, res) ;nivel 1
     ;Ciclo para los distintos niveles

@@ -15,8 +15,8 @@ FILES                       = systemfunc (" ls -1 " + DATADir + "wrfout_d08_*")
 FILES_ter                   = systemfunc (" ls -1 " + DATADir + "wrfinput*d08*")
 numFILES                    = dimsizes(FILES)
 ;Inicialización del gráfico
-type                        = "png"
-wks                         = gsn_open_wks(type,"st/10m")
+type                        = "pdf"
+wks                         = gsn_open_wks(type,"st/eta1")
 ;Almacenamiento de los archivos a plotear 
 a                           = addfiles(FILES,"r")
 b                           = addfiles(FILES_ter,"r")
@@ -89,15 +89,19 @@ print("Grafico de V")
 do it = 0,ntimes-1,1
     ;Comienzo de creación de gráficos
     ;obtencion de datos
-    auxres@TimeLabel           = times(it)
-    u10                     = wrf_user_getvar(a[it],"U10",0)
-    v10                     = wrf_user_getvar(a[it],"V10",0)
-    mag                     = sqrt(u10^2 + v10^2)
+    auxres@TimeLabel        = times(it)
+    ; u10                     = wrf_user_getvar(a[it],"U10",0)
+    ; v10                     = wrf_user_getvar(a[it],"V10",0)
+    ; mag                     = sqrt(u10^2 + v10^2)
+    uvm                     = wrf_user_getvar(a[it],"uvmet",0)
+    u                       = uvm(0,0,:,:) 
+    v                       = uvm(1,0,:,:)
+    mag                     = sqrt(u^2 + v^2)
     print("     Graficando en tiempo: " + times(it))
     ;contour_mag             = wrf_contour(a[it],wks_V,mag,res)
     ;plot                    = wrf_map_overlays(a[it],wks_V,(/contour_mag/),auxres,mpres)
     ;plot = gsn_csm_vector_scalar(wks,u10,v10,mag,res)
-    stream = gsn_csm_streamline_scalar(wks,u10,v10,mag,res)
+    stream = gsn_csm_streamline_scalar(wks,u,v,mag,res)
     plot          = wrf_map_overlays(a[0],wks,(/contour_hgt,stream/),auxres,mpres)
 end do
 end

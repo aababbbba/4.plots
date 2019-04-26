@@ -53,11 +53,16 @@ res@lbLabelFontHeightF              = .015
 ;Carácterísticas del wrfoverlay 
 mpres                       = True
 mpres@mpOutlineOn           = True
+mpres@ZoomIn = True
 ;Características del plot global
 auxres  = True
 auxres@NoTitles = True
 
 nn_modif = 25 ;numero de elementos a borrar de los bordes 
+mpres@Xstart = nn_modif     ; Set these four special WRF resources
+mpres@Xend   = dimX-1-nn_modif        ; required for zooming.
+mpres@Ystart = nn_modif
+mpres@Yend   = dimX-1-nn_modif
 
 ;grafico de u
 print("Grafico de u")
