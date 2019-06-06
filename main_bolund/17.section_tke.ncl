@@ -61,12 +61,12 @@ titulos = (/"06:00","06:05","06:10","06:15","06:20","06:25",\
             "21:30","21:35","21:40","21:45","21:50","21:55",\
             "22:00"/)
 ;Datos de comparación
-U1 = 4.794997
-U2 = 5.239543
-U3 = 5.644497
-k1 = 0.0264
-k2 = 0.0040
-k3 = 0.0003
+U1 = 5.120095
+U2 = 5.619566
+U3 = 6.064954
+k1 = 0.03947184
+k2 = 0.00735331
+k3 = 0.001030086
 ;caracteristicas del gráfico
 res                       = True
 res@gsnMaximize           = True
@@ -103,6 +103,22 @@ res@trYMinF                     = -0.05
 res@tmYLValues        = (/-0.05,0.0,0.05,0.1,0.15,0.2,0.25,0.30 /)
 res@tmYLLabels        = sprintf("%5.2f",(/-0.05,0,0.05,0.1,0.15,0.2,0.25,0.30/))
 
+res3 = True
+res3@xyMarkerSizes     = 0.01
+res3@xyMarkers         = 0
+res3@xyMarkLineModes   = "Markers"
+res3@xyMarkerColors    = "darkolivegreen3"
+res3@gsnDraw  = False
+res3@gsnFrame = False
+
+res2 = True
+res2@xyMarkerSizes     = 0.01
+res2@xyMarkers         = 0
+res2@xyMarkLineModes   = "Markers"
+res2@xyMarkerColors    = "darkslateblue"
+res2@gsnDraw  = False
+res2@gsnFrame = False
+
 ;ITERACION
 do it = 72,ntimes-1,1
 ;it = ntimes-1
@@ -129,6 +145,31 @@ do it = 72,ntimes-1,1
     xy_plot3 = gsn_csm_y(wks,tke3_plane/(U3^2)-k3/(U3^2),res)
     overlay(xy_plot,xy_plot2)
     overlay(xy_plot,xy_plot3)
+
+    ;M1
+    plotm1a = gsn_csm_xy(wks,(/14.5,14.5/),(/0.0,0.0/),res3);5m
+    overlay(xy_plot,plotm1a)
+    plotm1b = gsn_csm_xy(wks,(/14.5,14.5/),(/0.015,0.015/),res2) ;2m
+    overlay(xy_plot,plotm1b)
+
+    ;M2
+    plotm2a = gsn_csm_xy(wks,(/23,23/),(/0.01,0.01/),res3);5m
+    overlay(xy_plot,plotm2a)
+    plotm2b = gsn_csm_xy(wks,(/23,23/),(/0.16,0.16/),res2) ;2m
+    overlay(xy_plot,plotm2b)
+
+    ;M3
+    plotm3a = gsn_csm_xy(wks,(/39,39/),(/0.02,0.02/),res3);5m
+    overlay(xy_plot,plotm3a)
+    plotm3b = gsn_csm_xy(wks,(/39,39/),(/0.03,0.03/),res2) ;2m
+    overlay(xy_plot,plotm3b)
+
+    ;M4
+    plotm4a = gsn_csm_xy(wks,(/59,59/),(/0.035,0.035/),res3);5m
+    overlay(xy_plot,plotm4a)
+    plotm4b = gsn_csm_xy(wks,(/59,59/),(/0.025,0.025/),res2) ;2m
+    overlay(xy_plot,plotm4b)
+
     draw(xy_plot)
     frame(wks)
 end do

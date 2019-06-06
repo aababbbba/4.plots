@@ -151,9 +151,8 @@ overlay(plot1,plot10)
 
 
 
-
-res2@xyLineThicknessF = 2
 res2@xyDashPattern     = 14
+res2@xyLineThicknessF = 2
 res2@xyLineColors       = "Black"
 plotxx = gsn_csm_xy(wks,(/12,12/),(/-2.0,190/),res2)
 overlay(plot1,plotxx)

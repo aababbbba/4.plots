@@ -111,7 +111,7 @@ it = ntimes-1
     xy_plot = gsn_csm_y(wks,z_plane,res)
     res@xyLineThicknessF  = 5
     res@xyLineColor       =  180
-    plotxx = gsn_csm_xy(wks,(/12,12/),(/0.0,10/),res)
+    plotxx = gsn_csm_xy(wks,(/14.5,14.5/),(/0.0,10/),res)
     overlay(xy_plot,plotxx)
 
     plotxx2 = gsn_csm_xy(wks,(/23,23/),(/11.0,21/),res)

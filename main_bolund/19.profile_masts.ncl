@@ -151,8 +151,9 @@ U           = 0.
 ;Obtención de data
 locX        = locX - 1
 locY        = locY - 1
+print(locX+" "+locY)
 ;Almacenamiento de la altura del terreno
-hgt_point   = ter(locX,locY)
+hgt_point   = ter(locY,locX)
 ;LOOP POR CADA GRÁFICO DEL PROMEDIO MOVIL
 do ii = 0,X-1,1 ;Loop por por cada gráfico
     n_inicial = 72+ii ;índice del archivo inicial
@@ -164,13 +165,15 @@ do ii = 0,X-1,1 ;Loop por por cada gráfico
         tke_data = wrf_user_getvar(a[it],"TKE",0) 
         uvm      = wrf_user_getvar(a[it],"uvmet",0) ;Extrae las componente u,v rotadas a la cord de la tierra y en los mass point
         u_data   = uvm(0,:,:,:) 
-        v_data   = uvm(1,:,:,:)  
+        v_data   = uvm(1,:,:,:)
+        ;print("     Graficando en tiempo: " + times(it))
+        ;print("V1 = "+ sqrt(u_data(0,locX,locY)^2.0+v_data(0,locX,locY)^2.0))  
         ;loop por los niveles
         do jj = 0, eta_max-1
-            z(ii,jj)    = z(ii,jj) + z_data(jj,locX,locY)
-            tke(ii,jj)  = tke(ii,jj) + tke_data(jj,locX,locY)
-            u(ii,jj)    = u(ii,jj) + u_data(jj,locX,locY)
-            v(ii,jj)    = v(ii,jj) + v_data(jj,locX,locY)
+            z(ii,jj)    = z(ii,jj) + z_data(jj,locY,locX)
+            tke(ii,jj)  = tke(ii,jj) + tke_data(jj,locY,locX)
+            u(ii,jj)    = u(ii,jj) + u_data(jj,locY,locX)
+            v(ii,jj)    = v(ii,jj) + v_data(jj,locY,locX)
         end do
     end do
     ;Calculo de promedios
@@ -184,7 +187,7 @@ res@tiXAxisString = "V [m/s]"
 res@tiYAxisString = "z [m]"
 do ii=0,X-1,1 ;Paso por cada promedio horario
     res@tiMainString = "Mean profile from "+titulos(72+ii)+" to "+titulos(72+ii+(N-1))
-    U(ii,:)          = sqrt(u(ii,:)^2+v(ii,:)^2)
+    U(ii,:)          = sqrt(u(ii,:)^2.0+v(ii,:)^2.0)
     ;plot             = gsn_csm_xy(wks_U, U(ii,:) , z(ii,:), res)
     ;draw(plot)
     ;frame(wks_U)
@@ -192,6 +195,7 @@ end do
 
 
 U_ref = U
+;print(U_ref)
 k_ref = tke
 ;
 res@trXMinF           = -1.0
@@ -207,6 +211,14 @@ res2@tmXBValues        = (/-0.05,0.0,0.05,0.10,0.15,0.2 /)
 res2@tmXBLabels        = sprintf("%5.2f",(/-0.05,0.0,0.05,0.10,0.15,0.2 /))
 res2@tiXAxisString = "~F33~D~N~~F~k"
 ;res2@tiYAxisString = "z [m]"
+
+res3                   = True
+res3@xyMarkerSizes     = 0.014
+res3@xyMarkers         = 0
+res3@xyMarkLineModes   = "Markers"
+res3@gsnDraw           = False
+res3@gsnFrame          = False
+
 ;M1
 print("        Creando gráfico para M1")
 start_lat   = 55.70332
@@ -229,8 +241,9 @@ U           = 0.
 ;Obtención de data
 locX        = locX - 1
 locY        = locY - 1
+print(locX+" "+locY)
 ;Almacenamiento de la altura del terreno
-hgt_point   = ter(locX,locY)
+hgt_point   = ter(locY,locX)
 ;LOOP POR CADA GRÁFICO DEL PROMEDIO MOVIL
 do ii = 0,X-1,1 ;Loop por por cada gráfico
     n_inicial = 72+ii ;índice del archivo inicial
@@ -242,13 +255,13 @@ do ii = 0,X-1,1 ;Loop por por cada gráfico
         tke_data = wrf_user_getvar(a[it],"TKE",0)
         uvm     = wrf_user_getvar(a[it],"uvmet",0) ;Extrae las componente u,v rotadas a la cord de la tierra y en los mass point
         u_data  = uvm(0,:,:,:) 
-        v_data  = uvm(1,:,:,:)  
+        v_data  = uvm(1,:,:,:)
         ;loop por los niveles
         do jj = 0, eta_max-1
-            z(ii,jj)    = z(ii,jj) + z_data(jj,locX,locY)
-            tke(ii,jj)  = tke(ii,jj) + tke_data(jj,locX,locY)
-            u(ii,jj)    = u(ii,jj) + u_data(jj,locX,locY)
-            v(ii,jj)    = v(ii,jj) + v_data(jj,locX,locY)
+            z(ii,jj)    = z(ii,jj) + z_data(jj,locY,locX)
+            tke(ii,jj)  = tke(ii,jj) + tke_data(jj,locY,locX)
+            u(ii,jj)    = u(ii,jj) + u_data(jj,locY,locX)
+            v(ii,jj)    = v(ii,jj) + v_data(jj,locY,locX)
         end do
     end do
     ;Calculo de promedios
@@ -260,14 +273,19 @@ end do
 ;Gráfico V
 res@tiXAxisString = "~F33~D~N~~F~S"
 res@tiYAxisString = "z [m]"
-res@xyLineColor    = 40
-res2@xyLineColor   = 40
+res@xyLineColors    = "blue3"
+res2@xyLineColors   = "blue3"
+res3@xyMarkerColors = "blue3"
 do ii=0,X-1,1 ;Paso por cada promedio horario
     res@tiMainString = "Mean profile from "+titulos(72+ii)+" to "+titulos(72+ii+(N-1))
     res2@tiMainString = "Mean profile from "+titulos(72+ii)+" to "+titulos(72+ii+(N-1))
-    U(ii,:)          = sqrt(u(ii,:)^2+v(ii,:)^2)
+    U(ii,:)          = sqrt(u(ii,:)^2.0+v(ii,:)^2.0)
     plot1            = gsn_csm_xy(wks_U, (U(ii,:)-U_ref(ii,:))/U_ref(ii,:) , z(ii,:), res)
-    plot_k1          = gsn_csm_xy(wks_k, (tke(ii,:)-k_ref(ii,:))/U_ref(ii,:) , z(ii,:), res2)
+    plot12           = gsn_csm_xy(wks_U, (/ -0.52 , -0.33 , -0.23 /) , (/ 2.2 , 5.2 , 8.9 /), res3)
+    overlay(plot1, plot12)
+    plot_k1          = gsn_csm_xy(wks_k, (tke(ii,:)-k_ref(ii,:))/(U_ref(ii,:)^2.0) , z(ii,:), res2)
+    plot_k12         = gsn_csm_xy(wks_k, (/ 0.0075 , 0.001 , 0.0 /) , (/ 2.2 , 5.2 , 8.9 /), res3)
+    overlay(plot_k1, plot_k12)
 ;    draw(plot)
 ;    frame(wks_U)
 end do
@@ -294,8 +312,9 @@ U           = 0.
 ;Obtención de data
 locX        = locX - 1
 locY        = locY - 1
+print(locX+" "+locY)
 ;Almacenamiento de la altura del terreno
-hgt_point   = ter(locX,locY)
+hgt_point   = ter(locY,locX)
 ;LOOP POR CADA GRÁFICO DEL PROMEDIO MOVIL
 do ii = 0,X-1,1 ;Loop por por cada gráfico
     n_inicial = 72+ii ;índice del archivo inicial
@@ -307,13 +326,15 @@ do ii = 0,X-1,1 ;Loop por por cada gráfico
         tke_data = wrf_user_getvar(a[it],"TKE",0)
         uvm     = wrf_user_getvar(a[it],"uvmet",0) ;Extrae las componente u,v rotadas a la cord de la tierra y en los mass point
         u_data  = uvm(0,:,:,:) 
-        v_data  = uvm(1,:,:,:)  
+        v_data  = uvm(1,:,:,:)
+        ;print("     Graficando en tiempo: " + times(it))
+        ;print("V1 = "+ sqrt(u_data(0,locY,locX)^2.0+v_data(0,locY,locX)^2.0))
         ;loop por los niveles
         do jj = 0, eta_max-1
-            z(ii,jj)    = z(ii,jj) + z_data(jj,locX,locY)
-            tke(ii,jj)  = tke(ii,jj) + tke_data(jj,locX,locY)
-            u(ii,jj)    = u(ii,jj) + u_data(jj,locX,locY)
-            v(ii,jj)    = v(ii,jj) + v_data(jj,locX,locY)
+            z(ii,jj)    = z(ii,jj) + z_data(jj,locY,locX)
+            tke(ii,jj)  = tke(ii,jj) + tke_data(jj,locY,locX)
+            u(ii,jj)    = u(ii,jj) + u_data(jj,locY,locX)
+            v(ii,jj)    = v(ii,jj) + v_data(jj,locY,locX)
         end do
     end do
     ;Calculo de promedios
@@ -325,15 +346,21 @@ end do
 ;Gráfico V
 res@tiXAxisString = "~F33~D~N~~F~S"
 res@tiYAxisString = "z [m]"
-res@xyLineColor    = 100
-res2@xyLineColor   = 100
+res@xyLineColors    = "orange2"
+res2@xyLineColors   = "orange2"
 res2@xyDashPattern = 2
 res@xyDashPattern = 2
+res3@xyMarkerColors = "orange2"
 do ii=0,X-1,1 ;Paso por cada promedio horario
     res@tiMainString = "Mean profile from "+titulos(72+ii)+" to "+titulos(72+ii+(N-1))
-    U(ii,:)          = sqrt(u(ii,:)^2+v(ii,:)^2)
+    U(ii,:)          = sqrt(u(ii,:)^2.0+v(ii,:)^2.0)
+    ;print(U)
     plot2            = gsn_csm_xy(wks_U, (U(ii,:)-U_ref(ii,:))/U_ref(ii,:) , z(ii,:), res)
-    plot_k2          = gsn_csm_xy(wks_k, (tke(ii,:)-k_ref(ii,:))/U_ref(ii,:) , z(ii,:), res2)
+    plot22           = gsn_csm_xy(wks_U, (/ -0.67 , -0.08 , 0.26, 0.13 /) , (/ 1.1 , 2.1 , 5.1, 9.1 /), res3)
+    overlay(plot1, plot22)
+    plot_k2          = gsn_csm_xy(wks_k, (tke(ii,:)-k_ref(ii,:))/(U_ref(ii,:)^2.0) , z(ii,:), res2)
+    plot_k22         = gsn_csm_xy(wks_k, (/ 0.18625 , 0.155 , 0.0075, 0.0025 /) , (/ 1.1 , 2.1 , 5.1, 9.1 /), res3)
+    overlay(plot_k1, plot_k22)
     overlay(plot1, plot2)
     overlay(plot_k1, plot_k2)
     ;draw(plot)
@@ -362,8 +389,9 @@ U           = 0.
 ;Obtención de data
 locX        = locX - 1
 locY        = locY - 1
+print(locX+" "+locY)
 ;Almacenamiento de la altura del terreno
-hgt_point   = ter(locX,locY)
+hgt_point   = ter(locY,locX)
 ;LOOP POR CADA GRÁFICO DEL PROMEDIO MOVIL
 do ii = 0,X-1,1 ;Loop por por cada gráfico
     n_inicial = 72+ii ;índice del archivo inicial
@@ -378,10 +406,10 @@ do ii = 0,X-1,1 ;Loop por por cada gráfico
         v_data  = uvm(1,:,:,:)  
         ;loop por los niveles
         do jj = 0, eta_max-1
-            z(ii,jj)    = z(ii,jj) + z_data(jj,locX,locY)
-            tke(ii,jj)  = tke(ii,jj) + tke_data(jj,locX,locY)
-            u(ii,jj)    = u(ii,jj) + u_data(jj,locX,locY)
-            v(ii,jj)    = v(ii,jj) + v_data(jj,locX,locY)
+            z(ii,jj)    = z(ii,jj) + z_data(jj,locY,locX)
+            tke(ii,jj)  = tke(ii,jj) + tke_data(jj,locY,locX)
+            u(ii,jj)    = u(ii,jj) + u_data(jj,locY,locX)
+            v(ii,jj)    = v(ii,jj) + v_data(jj,locY,locX)
         end do
     end do
     ;Calculo de promedios
@@ -393,15 +421,20 @@ end do
 ;Gráfico V
 res@tiXAxisString = "~F33~D~N~~F~S"
 res@tiYAxisString = "z [m]"
-res@xyLineColor   = 160
-res2@xyLineColor   = 160
+res@xyLineColors   = "green4"
+res2@xyLineColors  = "green4"
 res2@xyDashPattern = 3
 res@xyDashPattern = 3
+res3@xyMarkerColors = "green4"
 do ii=0,X-1,1 ;Paso por cada promedio horario
     res@tiMainString = "Mean profile from "+titulos(72+ii)+" to "+titulos(72+ii+(N-1))
     U(ii,:)          = sqrt(u(ii,:)^2+v(ii,:)^2)
     plot3             = gsn_csm_xy(wks_U, (U(ii,:)-U_ref(ii,:))/U_ref(ii,:) , z(ii,:), res)
-    plot_k3          = gsn_csm_xy(wks_k, (tke(ii,:)-k_ref(ii,:))/U_ref(ii,:) , z(ii,:), res2)
+    plot32           = gsn_csm_xy(wks_U, (/ -0.11 , -0.03 , 0.0 /) , (/ 2.0 , 5.0 , 9.0 /), res3)
+    overlay(plot1, plot32)
+    plot_k3          = gsn_csm_xy(wks_k, (tke(ii,:)-k_ref(ii,:))/(U_ref(ii,:)^2.0) , z(ii,:), res2)
+    plot_k32         = gsn_csm_xy(wks_k, (/ 0.02625 , 0.01625 , 0.00625 /) , (/ 2.0 , 5.0 , 9.0 /), res3)
+    overlay(plot_k1, plot_k32)
     overlay(plot1, plot3)
     overlay(plot_k1, plot_k3)
     ;draw(plot)
@@ -430,8 +463,9 @@ U           = 0.
 ;Obtención de data
 locX        = locX - 1
 locY        = locY - 1
+print(locX+" "+locY)
 ;Almacenamiento de la altura del terreno
-hgt_point   = ter(locX,locY)
+hgt_point   = ter(locY,locX)
 ;LOOP POR CADA GRÁFICO DEL PROMEDIO MOVIL
 do ii = 0,X-1,1 ;Loop por por cada gráfico
     n_inicial = 72+ii ;índice del archivo inicial
@@ -446,10 +480,10 @@ do ii = 0,X-1,1 ;Loop por por cada gráfico
         v_data  = uvm(1,:,:,:)  
         ;loop por los niveles
         do jj = 0, eta_max-1
-            z(ii,jj)    = z(ii,jj) + z_data(jj,locX,locY)
-            tke(ii,jj)  = tke(ii,jj) + tke_data(jj,locX,locY)
-            u(ii,jj)    = u(ii,jj) + u_data(jj,locX,locY)
-            v(ii,jj)    = v(ii,jj) + v_data(jj,locX,locY)
+            z(ii,jj)    = z(ii,jj) + z_data(jj,locY,locX)
+            tke(ii,jj)  = tke(ii,jj) + tke_data(jj,locY,locX)
+            u(ii,jj)    = u(ii,jj) + u_data(jj,locY,locX)
+            v(ii,jj)    = v(ii,jj) + v_data(jj,locY,locX)
         end do
     end do
     ;Calculo de promedios
@@ -461,15 +495,20 @@ end do
 ;Gráfico V
 res@tiXAxisString = "~F33~D~N~~F~S"
 res@tiYAxisString = "z [m]"
-res@xyLineColor    = 220
-res2@xyLineColor   = 220
+res@xyLineColors    = "red3"
+res2@xyLineColors   = "red3"
 res2@xyDashPattern = 4
-res@xyDashPattern = 4     
+res@xyDashPattern = 4
+res3@xyMarkerColors = "red3"  
 do ii=0,X-1,1 ;Paso por cada promedio horario
     res@tiMainString = "Mean profile from "+titulos(72+ii)+" to "+titulos(72+ii+(N-1))
-    U(ii,:)          = sqrt(u(ii,:)^2+v(ii,:)^2)
+    U(ii,:)          = sqrt(u(ii,:)^2.0+v(ii,:)^2.0)
     plot4            = gsn_csm_xy(wks_U, (U(ii,:)-U_ref(ii,:))/U_ref(ii,:) , z(ii,:), res)
-    plot_k4          = gsn_csm_xy(wks_k, (tke(ii,:)-k_ref(ii,:))/U_ref(ii,:) , z(ii,:), res2)
+    plot42           = gsn_csm_xy(wks_U, (/ -0.2 , -0.55 , -0.41 /) , (/ 1.9 , 4.4 , 8.4 /), res3)
+    overlay(plot1, plot42)
+    plot_k4          = gsn_csm_xy(wks_k, (tke(ii,:)-k_ref(ii,:))/(U_ref(ii,:)^2.0) , z(ii,:), res2)
+    plot_k42         = gsn_csm_xy(wks_k, (/ 0.02 , 0.03125 , 0.03 /) , (/ 1.9 , 4.4 , 8.4 /), res3)
+    overlay(plot_k1, plot_k42)
     overlay(plot1, plot4)
     draw(plot1)
     frame(wks_U)

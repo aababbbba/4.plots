@@ -44,7 +44,7 @@ ax3.set_xlabel(r'$\tau_{13}/u_*^2$ $[-]$')
 ax3.set_ylabel(r'$z/\delta$ [-]')
 ax3.set_ylim(0,1)
 ax3.minorticks_on()
-ax3.plot(-1.0*datos[:,10],datos[:,0]/delta,"-",lw=lww,color="green")
+ax3.plot(datos[:,10],datos[:,0]/delta,"-",lw=lww,color="green")
 
 fig3.tight_layout()
 pdf_pages.savefig(fig3)

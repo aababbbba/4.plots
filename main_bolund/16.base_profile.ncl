@@ -92,7 +92,7 @@ else
     locY      = locY - 1
     ;Almacenamiento de la altura del terreno
     ter       = wrf_user_getvar(a[0],"HGT",0)
-    hgt_point = ter(locX,locY)
+    hgt_point = ter(locY,locX)
     ;LOOP POR CADA GRÁFICO DEL PROMEDIO MOVIL
     do ii = 0,X-1,1 ;Loop por por cada gráfico
         print("        Obteniendo datos para gráfico "+(ii+1)+":")
@@ -114,9 +114,9 @@ else
             v_data      = uvm(1,:,:,:)  
             ;loop por los niveles
             do jj = 0, eta_max-1
-                z(ii,jj)     = z(ii,jj) + z_data(jj,locX,locY)
-                u(ii,jj)     = u(ii,jj) + u_data(jj,locX,locY)
-                v(ii,jj)     = v(ii,jj) + v_data(jj,locX,locY)
+                z(ii,jj)     = z(ii,jj) + z_data(jj,locY,locX)
+                u(ii,jj)     = u(ii,jj) + u_data(jj,locY,locX)
+                v(ii,jj)     = v(ii,jj) + v_data(jj,locY,locX)
             end do
         end do
         ;Calculo de promedios
@@ -151,15 +151,20 @@ res@tmXMajorGrid            = True
 res@tmYMajorGrid            = True
 res@tmYMajorGridLineColor   = "Gray"
 res@tmXMajorGridLineColor   = "Gray"
+res@tmGridDrawOrder             = "PreDraw"
 res@xyMarkerColor           = ((2*253)/9)
 res@xyLineColor             = (180)
 res@trYMaxF                 = 15.0
 res@trXMinF                 = 0.0
 res@trXMaxF                 = 15.0
 res3                         = True
-res3@xyLineThicknessF  = 4.0
-res3@xyDashPattern     = 3
-res3@xyLineColor       = "black";"red3"
+;res3@xyLineThicknessF  = 4.0
+;res3@xyDashPattern     = 3
+res3@xyMarkerSizes     = 0.014
+res3@xyMarkers         = 0
+res3@xyMarkLineModes   = "Markers"
+res3@xyMarkerColors    = "red3"
+;res3@xyLineColor       = "black";"red3"
 res3@gsnDraw  = False
 res3@gsnFrame = False
 

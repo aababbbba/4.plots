@@ -163,8 +163,8 @@ plot6  = gsn_csm_xy(wks,tt,magu_116m,res)
 overlay(plot1,plot6)
 
 res@xyLineThicknessF = 2
-res@xyDashPattern     = 14
 res@xyLineColors       = "Black"
+res@xyDashPattern       = 14
 plotxx = gsn_csm_xy(wks,(/12,12/),(/-2.0,25/),res)
 overlay(plot1,plotxx)
 

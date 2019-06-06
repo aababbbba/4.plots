@@ -12,7 +12,7 @@ DATADir                     = "../"
 FILES                       = systemfunc (" ls -1 " + DATADir + "wrfout_d07_2010-09-08_06:00:00")
 numFILES                    = dimsizes(FILES)
 ;Entornos
-type                        = "pdf"
+type                        = "png"
 wks                         = gsn_open_wks(type,"mesh/mesh_y")
 ;Almacenamiento de archivos
 a                           = addfiles(FILES,"r")
@@ -36,7 +36,7 @@ aux     = ispan(1, dimX, 1)*dx ; para recorrer todo el dominio
 gsn_define_colormap(wks,"MPL_viridis")
 res                         = True
 res@vpWidthF                = 0.5
-res@vpHeightF               = (max_altura/(dx*dimX))*2; escala 4:1
+res@vpHeightF               = (max_altura/(dx*dimX))*2.0; escala 4:1
 res@gsnMaximize             = True     
 res@xyMarkLineModes         = "Lines"                
 res@tiYAxisFontHeightF      = 0.015
@@ -57,7 +57,7 @@ res@gsnFrame                = False
 do ii = 0,dimX-1,1
     ;Comienzo del algoritmo de generación de gráficos
     print(" Creando gráfico para y = "+(ii+1))
-    res@xyLineColor             = ((5*253)/8)
+    res@xyLineColor             = 120
     res@xyLineThicknesses       = 2.0
     aux_z                       = (z_data(0,ii,:)+z_data(1,ii,:))*0.5;Se promedian los valores de altura en los mass point
     plot1                       = gsn_csm_xy(wks, aux, aux_z, res) ;nivel 1

@@ -6,7 +6,7 @@ begin
 print("        Cargando archivos...")
 ;Ubicación de Archivos
 DATADir                     = "../"
-FILES                       = systemfunc (" ls -1 " + DATADir + "wrfout_d07_*")
+FILES                       = systemfunc (" ls -1 " + DATADir + "wrfout_d08_*")
 numFILES                    = dimsizes(FILES)
 ;Almacenamiento de archivos
 a                           = addfiles(FILES,"r")
@@ -20,19 +20,58 @@ dimY                        = mdims(nd-2)
 dimX                        = mdims(nd-1)
 
 eta_max = 20
+
+;UST MEDIOS 
+;M1 0.2339723
+;M2 0.6041838
+;M3 0.5304753
+;M4 0.1057375
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-loc         = wrf_user_ll_to_ij(a[0], 8.1509, 56.4406, True)
-locX        = loc(0)
-locY        = loc(1)
-if ( locX .lt. 1 .or. locX .gt. dimX .or. locY .lt. 1 .or. locY .gt. dimY )
-    print("Fuera de dominio")
-else 
-    locX      = locX - 1
-    locY      = locY - 1
+text_m  = "m4"
+
+if (text_m .eq. "m1") then
+    print("M: "+text_m)
+    dataLON = 12.09760
+    dataLAT = 55.70332
+else if (text_m .eq. "m2") then
+    print("M: "+text_m)
+    dataLON = 12.09787
+    dataLAT = 55.70340
+else if (text_m .eq. "m3") then
+    print("M: "+text_m)
+    dataLON = 12.09850
+    dataLAT = 55.70360
+else if (text_m .eq. "m4") then
+    print("M: "+text_m)
+    dataLON = 12.09927
+    dataLAT = 55.70386
+else
+    print("ERROR EN NOMBRAR MASTIL")
 end if
+end if
+end if
+end if
+; M1 12.09760,55.70332
+; M2 12.09787,55.70340
+; M3 12.09850,55.70360
+; M4 12.09927,55.70386
+; M5 12.09848,55.70315
+; M6 12.09770,55.70360
+; M7 12.09735,55.70360
+; M8 12.09992,55.70360
+
+loc         = wrf_user_ll_to_ij(a[0], dataLON, dataLAT, True)
+locX        = loc(1)
+locY        = loc(0)
+
+locX        = locX - 1
+locY        = locY - 1
+
 len         = 0
 ter         = wrf_user_getvar(a[0],"HGT",0)
 hgt_point   = ter(locX,locY)
+
 ;Variables a rescatar
 z   = new((/eta_max/),float)
 z   = 0
@@ -44,9 +83,9 @@ xkmh = z
 def13 = z 
 def23 = z
 
-data_min = 36
-data_max = 48
-print("promedio entre:"+times(data_min)+" y "+times(data_max))
+data_min = 72
+data_max = 72+37-1
+print("Promedio entre: "+times(data_min)+" y "+times(data_max))
 ;Calculo de promedio
 do it = data_min,data_max,1
     print("     Datos en tiempo: " + times(it))
@@ -120,7 +159,7 @@ calc_tau23      = (xkmv*def23)/(ust^2.0)
 aux_write(:,10) = -1.0*sqrt(calc_tau13^2.0 + calc_tau23^2.0)
 
 opt      = True
-opt@fout = "main/data_mean/data_mean.txt"
+opt@fout = "main/secondorder_mean/"+text_m+".txt"
 ;write_matrix(z,dimX + "f28.21",opt)
 write_matrix(aux_write,"11f18.12",opt)
 ;print(z)

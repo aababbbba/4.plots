@@ -110,6 +110,7 @@ pena_Uz = pena_Uz/delta
 loc         = wrf_user_ll_to_ij(a[0], 8.1509, 56.4406, True)
 locX        = loc(0)
 locY        = loc(1)
+print(locX+" , "+locY)
 if ( locX .lt. 1 .or. locX .gt. dimX .or. locY .lt. 1 .or. locY .gt. dimY )
     print("Fuera de dominio")
 else 

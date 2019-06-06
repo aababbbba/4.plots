@@ -29,10 +29,10 @@ def prom_movil(a,n):
 	return b;
 
 #Recta -5/3
-x1=0.02
+x1=0.01
 x2=0.2
-y1=0.1*x1**(-5.0/3.0)
-y2=0.1*x2**(-5.0/3.0)
+y1=0.05*x1**(-5.0/3.0)
+y2=0.05*x2**(-5.0/3.0)
 x=[x1,x2]
 y=[y1,y2]
 #Obtención de datos para V
@@ -48,12 +48,15 @@ modif_eta4 	= prom_movil(eta4,mm)
 eta5 		= np.loadtxt("data/mean/eta05/V.txt")
 modif_eta5 	= prom_movil(eta5,mm)
 # Gráfico del espectro para el número de onda
+colors = plt.cm.viridis(np.linspace(1,0,5))
+lww = 1.5
+opa = 0.8
 plot = plt.figure(figsize=(8,4))
-plt.loglog(modif_eta1[:,0], modif_eta1[:,0]**2.0*modif_eta1[:,1]**2.0,lw=1.3,label=r"$\eta_1\approx$ 1.12 [m]")
-plt.loglog(modif_eta2[:,0], modif_eta2[:,0]**2.0*modif_eta2[:,1]**2.0,lw=1.3,label=r"$\eta_2\approx$ 3.36 [m]")
-plt.loglog(modif_eta3[:,0], modif_eta3[:,0]**2.0*modif_eta3[:,1]**2.0,lw=1.3,label=r"$\eta_3\approx$ 5.60 [m]")
-plt.loglog(modif_eta4[:,0], modif_eta4[:,0]**2.0*modif_eta4[:,1]**2.0,lw=1.3,label=r"$\eta_4\approx$ 8.40 [m]")
-plt.loglog(modif_eta5[:,0], modif_eta5[:,0]**2.0*modif_eta5[:,1]**2.0,lw=1.3,label=r"$\eta_5\approx$ 11.75 [m]")
+plt.loglog(modif_eta1[:,0], modif_eta1[:,0]**2.0*modif_eta1[:,1]**2.0,lw=lww,label=r"$\eta_1\approx$ 1.12 [m]",color=colors[4],alpha=opa)
+plt.loglog(modif_eta2[:,0], modif_eta2[:,0]**2.0*modif_eta2[:,1]**2.0,lw=lww,label=r"$\eta_2\approx$ 3.36 [m]",color=colors[3],alpha=opa)
+plt.loglog(modif_eta3[:,0], modif_eta3[:,0]**2.0*modif_eta3[:,1]**2.0,lw=lww,label=r"$\eta_3\approx$ 5.60 [m]",color=colors[2],alpha=opa)
+plt.loglog(modif_eta4[:,0], modif_eta4[:,0]**2.0*modif_eta4[:,1]**2.0,lw=lww,label=r"$\eta_4\approx$ 8.40 [m]",color=colors[1],alpha=opa)
+plt.loglog(modif_eta5[:,0], modif_eta5[:,0]**2.0*modif_eta5[:,1]**2.0,lw=lww,label=r"$\eta_5\approx$ 11.75 [m]",color=colors[0],alpha=opa)
 plt.loglog(x,y,ls="--",color="k")
 plt.xlabel(r'k $[1/m]$')
 plt.ylabel(r'$k^{2}|\hat{V}(k)|^2$ $[m^2/s^2]$')

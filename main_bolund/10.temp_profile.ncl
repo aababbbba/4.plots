@@ -34,8 +34,8 @@ print("Sacando datos para M1...")
 dataLON     = 12.09760
 dataLAT     = 55.70332
 loc         = wrf_user_ll_to_ij(a[0], dataLON, dataLAT, True)
-locX        = loc(0)
-locY        = loc(1)
+locX        = loc(1)
+locY        = loc(0)
 locX        = locX - 1
 locY        = locY - 1
 hgt_point = ter(locX,locY)
@@ -57,8 +57,8 @@ print("Sacando datos para M2...")
 dataLON     = 12.09787
 dataLAT     = 55.70340
 loc         = wrf_user_ll_to_ij(a[0], dataLON, dataLAT, True)
-locX        = loc(0)
-locY        = loc(1)
+locX        = loc(1)
+locY        = loc(0)
 locX        = locX - 1
 locY        = locY - 1
 hgt_point = ter(locX,locY)
@@ -80,8 +80,8 @@ print("Sacando datos para M3...")
 dataLON     = 12.09850
 dataLAT     = 55.70360
 loc         = wrf_user_ll_to_ij(a[0], dataLON, dataLAT, True)
-locX        = loc(0)
-locY        = loc(1)
+locX        = loc(1)
+locY        = loc(0)
 locX        = locX - 1
 locY        = locY - 1
 hgt_point = ter(locX,locY)
@@ -103,8 +103,8 @@ print("Sacando datos para M4...")
 dataLON     = 12.09927
 dataLAT     = 55.70386
 loc         = wrf_user_ll_to_ij(a[0], dataLON, dataLAT, True)
-locX        = loc(0)
-locY        = loc(1)
+locX        = loc(1)
+locY        = loc(0)
 locX        = locX - 1
 locY        = locY - 1
 hgt_point = ter(locX,locY)
@@ -126,8 +126,8 @@ print("Sacando datos para M5...")
 dataLON     = 12.09848
 dataLAT     = 55.70315
 loc         = wrf_user_ll_to_ij(a[0], dataLON, dataLAT, True)
-locX        = loc(0)
-locY        = loc(1)
+locX        = loc(1)
+locY        = loc(0)
 locX        = locX - 1
 locY        = locY - 1
 hgt_point = ter(locX,locY)
@@ -149,8 +149,8 @@ print("Sacando datos para M6...")
 dataLON     = 12.09770
 dataLAT     = 55.70360
 loc         = wrf_user_ll_to_ij(a[0], dataLON, dataLAT, True)
-locX        = loc(0)
-locY        = loc(1)
+locX        = loc(1)
+locY        = loc(0)
 locX        = locX - 1
 locY        = locY - 1
 hgt_point = ter(locX,locY)
@@ -172,8 +172,8 @@ print("Sacando datos para M7...")
 dataLON     = 12.09735
 dataLAT     = 55.70360
 loc         = wrf_user_ll_to_ij(a[0], dataLON, dataLAT, True)
-locX        = loc(0)
-locY        = loc(1)
+locX        = loc(1)
+locY        = loc(0)
 locX        = locX - 1
 locY        = locY - 1
 hgt_point = ter(locX,locY)
@@ -195,8 +195,8 @@ print("Sacando datos para M8...")
 dataLON     = 12.09992
 dataLAT     = 55.70360
 loc         = wrf_user_ll_to_ij(a[0], dataLON, dataLAT, True)
-locX        = loc(0)
-locY        = loc(1)
+locX        = loc(1)
+locY        = loc(0)
 locX        = locX - 1
 locY        = locY - 1
 hgt_point = ter(locX,locY)
